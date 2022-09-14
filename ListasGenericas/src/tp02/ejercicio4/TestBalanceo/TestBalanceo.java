@@ -30,10 +30,6 @@ public class TestBalanceo {
 	}
 	public static void main(String[] args) {
 		String characters = "([{({[[]]})}])[]";
-		//char [] charApertura = new char[3];
-		//charApertura[0] = '(';
-		//charApertura[1] = '[';
-		//charApertura[2] = '{';
 		boolean balanceado = true;
 		PilaGenerica<Character> p = new PilaGenerica<Character>();
 		
