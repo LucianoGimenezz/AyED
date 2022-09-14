@@ -68,7 +68,7 @@ public class Testmethods {
 		array[1] = 2;
 		array[2] = 3;
 		array[3] = 4;
-		array[4] = 15;
+		array[4] = 1;
 		//test.getDataWithParams(array, result);
 		//System.out.println(test.getDataWithReturn(array));
 		//System.out.println(result.getValue());
