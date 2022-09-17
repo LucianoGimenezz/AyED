@@ -18,6 +18,12 @@ public class TestArbolBinario {
 	 
 	 ContadorArbol ca = new ContadorArbol(ab);
 	 
-	 ca.numerosParesInOrden();
+	 //ListaEnlazadaGenerica<Integer> ls =  ca.numerosParesInOrden();
+	 ListaEnlazadaGenerica<Integer> ls = ca.numerosParesPostOrden();
+	 ls.comenzar();
+	 
+	 while(!ls.fin()) {
+		 System.out.println(ls.proximo());
+	 }
  }
 }
