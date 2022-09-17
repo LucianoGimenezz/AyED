@@ -13,7 +13,6 @@ public class TestArbolBinario {
 	 //System.out.println("Arbol original:  " + ab.getHijoDerecho().getHijoIzquierdo());
 	 //System.out.println("Arbol Espejo:  " + abEspejo.getHijoIzquierdo().getHijoIzquierdo());
 	 
-	 //TODO  FIX Solo imprime el nivel 0 o el nivel 0 y 1
-	 ab.entreNiveles(0 , 1);
+	 ab.entreNiveles(0, 2);
  }
 }
