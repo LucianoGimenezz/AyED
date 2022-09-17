@@ -1,5 +1,6 @@
 package ejercicio1;
 
+
 public class ArbolBinario<T> {
 	private T dato;
 	private ArbolBinario<T> hijoIzquierdo;   
@@ -116,7 +117,35 @@ public class ArbolBinario<T> {
 
 
 	public void entreNiveles(int n, int m){
-		
+		if (!this.esVacio() && this.dato != null) {
+			int nivel = 0;
+			ColaGenerica<ArbolBinario<T>> cola = new ColaGenerica<ArbolBinario<T>>();
+			ArbolBinario<T> arbol = null;
+			cola.encolar(this);
+			cola.encolar(null);
+			while(!cola.esVacia() && (nivel >= n) && (nivel <= m)) {
+				arbol = cola.desencolar();
+				
+				if (arbol != null) {
+					if ((nivel >= n) && (nivel <= m)) {
+						System.out.println(arbol.getDato());
+					}
+			
+					if (arbol.tieneHijoDerecho()) {
+						cola.encolar(arbol.getHijoDerecho());
+					}
+					if (arbol.tieneHijoIzquierdo()) {
+						cola.encolar(arbol.getHijoIzquierdo());
+					}
+				}else {
+					if (!cola.esVacia()) {
+						System.out.println("Nivel " + nivel);
+						nivel++;
+						cola.encolar(null);
+					}
+				}
+			}
+		}
 	}
 
 	

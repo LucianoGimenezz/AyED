@@ -8,9 +8,12 @@ public class TestArbolBinario {
 	 ab.getHijoDerecho().agregarHijoIzquierdo(new ArbolBinario<Integer>(10));
 	 ab.getHijoDerecho().agregarHijoDerecho(new ArbolBinario<Integer>(20));
 	 //System.out.println(ab.contarHojas());
-	 ArbolBinario<Integer> abEspejo = ab.espejo();
+	 //ArbolBinario<Integer> abEspejo = ab.espejo();
 	 
-	 System.out.println("Arbol original:  " + ab.getHijoDerecho().getHijoIzquierdo());
-	 System.out.println("Arbol Espejo:  " + abEspejo.getHijoIzquierdo().getHijoIzquierdo());
+	 //System.out.println("Arbol original:  " + ab.getHijoDerecho().getHijoIzquierdo());
+	 //System.out.println("Arbol Espejo:  " + abEspejo.getHijoIzquierdo().getHijoIzquierdo());
+	 
+	 //TODO  FIX Solo imprime el nivel 0 o el nivel 0 y 1
+	 ab.entreNiveles(0 , 1);
  }
 }
