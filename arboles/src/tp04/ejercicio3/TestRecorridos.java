@@ -11,6 +11,7 @@ public class TestRecorridos {
 	 hijos.agregarFinal(new ArbolGeneral<Integer>(2, new ListaEnlazadaGenerica<ArbolGeneral<Integer>>()));
 	 hijos.agregarFinal(new ArbolGeneral<Integer>(5, new ListaEnlazadaGenerica<ArbolGeneral<Integer>>()));
 	 hijos.agregarFinal(new ArbolGeneral<Integer>(8, new ListaEnlazadaGenerica<ArbolGeneral<Integer>>()));
+	 hijos.agregarFinal(new ArbolGeneral<Integer>(28, new ListaEnlazadaGenerica<ArbolGeneral<Integer>>()));
 	 hijos.comenzar();
 	 int pos = 1;
 	 while (!hijos.fin()) {
@@ -20,14 +21,17 @@ public class TestRecorridos {
 		 pos++;
  	 }
 	
+	 System.out.println(ag.altura());
+	 System.out.println(ag.nivel(4));
+	 System.out.println(ag.ancho());
 	 
-	 RecorridosAG r = new RecorridosAG();
+	 //RecorridosAG r = new RecorridosAG();
 	 //ListaGenerica<Integer>ls = r.numerosImparesMayoresQuePreOrden(ag, 0);
-	 ListaGenerica<Integer>ls = r.numerosImparesMayoresQuePostOrden(ag, 0);
-	 ls.comenzar();
+	// ListaGenerica<Integer>ls = r.numerosImparesMayoresQuePostOrden(ag, 0);
+	 //ls.comenzar();
 	 
-	 while(!ls.fin()) {
-		 System.out.println(ls.proximo());
-	 }
+	// while(!ls.fin()) {
+		// System.out.println(ls.proximo());
+	 //}
  }
 }
