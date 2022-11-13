@@ -110,6 +110,7 @@ public class Mapa {
 		}
 		
 		if (v.dato().equals(ciudadDestino)) {
+			
 			return true;
 		}
 		
@@ -126,4 +127,61 @@ public class Mapa {
 		}
 		return encontre;
 	}
+	
+	//Ejercicio 5.3
+	
+	public ListaGenerica<String> caminoMasCorto (String ciudad1, String ciudad2) {
+		ListaGenerica<String> caminoMin = new ListaEnlazadaGenerica<String>();
+		ListaGenerica<String> caminoActual = new ListaEnlazadaGenerica<String>();
+		boolean [] marcas = new boolean [this.mapaCiudades.listaDeVertices().tamanio()+1];
+		int minKm = Integer.MAX_VALUE;
+		int kmActual = 0;
+		int posCiudad = this.buscarCiudad(ciudad1);
+		if (posCiudad == 0) {
+			return caminoMin;
+		}
+		this.dfs(posCiudad, ciudad2, marcas, this.mapaCiudades, caminoMin, caminoActual, kmActual, minKm);
+		return caminoMin;
+	}
+	
+	private int dfs(int pos, String ciudadDestino, boolean [] marcas, Grafo<String> grafo, ListaGenerica<String> caminoMin, ListaGenerica<String> caminoActual, int totalKm, int minKm) {
+		marcas[pos] = true;
+		boolean encontre = false;
+		Vertice<String> v = grafo.listaDeVertices().elemento(pos);
+		caminoActual.agregarFinal(v.dato());	
+		
+		if (v.dato().equals(ciudadDestino)) {
+			if (totalKm < minKm) {
+				minKm = totalKm;
+				
+				caminoMin.comenzar();
+				
+				while (!caminoMin.fin()) {
+					caminoMin.proximo();
+					caminoMin.eliminarEn(caminoMin.tamanio());
+				}
+				
+				caminoActual.comenzar();
+				while (!caminoActual.fin()) {
+					caminoMin.agregarFinal(caminoActual.proximo());
+				}
+				
+			}
+			return minKm;
+		}
+		
+		ListaGenerica<Arista<String>> ady = grafo.listaDeAdyacentes(v);
+		ady.comenzar();
+		while (!ady.fin()) {
+			Arista<String> a = ady.proximo();
+			int j = a.verticeDestino().getPosicion();
+			if (!marcas[j]) {
+				minKm = this.dfs(j, ciudadDestino, marcas, grafo, caminoMin,caminoActual, totalKm+a.peso(), minKm);
+				caminoActual.eliminarEn(caminoActual.tamanio());
+				marcas[j] = false;
+			}
+		}
+		return minKm;
+	}
+	
 }
