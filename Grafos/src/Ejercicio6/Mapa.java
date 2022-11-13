@@ -14,6 +14,8 @@ public class Mapa {
 		this.mapaCiudades = grafo;
 	}
 	
+	
+	// Ejercicio 5.1
 	public ListaGenerica<String> devolverCamino(String ciudad1, String ciudad2) {
 		ListaGenerica<String> list = new ListaEnlazadaGenerica<String>();
 		int posCiudad1 = this.buscarCiudad(ciudad1);
@@ -79,5 +81,49 @@ public class Mapa {
 			}
 		}
 		return posCiudad ;
+	}
+	
+	// Ejercicio 5.2
+	
+	public ListaGenerica<String> devolverCaminoExceptuando(String ciudad1, String ciudad2, ListaGenerica<String> ciudades) {
+		ListaGenerica<String> list = new ListaEnlazadaGenerica<String>();
+		boolean [] marcas = new boolean[this.mapaCiudades.listaDeVertices().tamanio()+1];
+		int posCiudad = this.buscarCiudad(ciudad1);
+		if (posCiudad == 0) {
+			return list;
+		}
+		boolean encontre = this.dfs(posCiudad, ciudad2, list, marcas, this.mapaCiudades, ciudades);
+		if (!encontre) {
+			list.eliminarEn(1);
+		}
+		return list;
+	}
+	
+	private boolean dfs(int pos, String ciudadDestino, ListaGenerica<String> camino, boolean [] marcas, Grafo<String> grafo, ListaGenerica<String> ciudades) {
+		marcas[pos] = true;
+		boolean encontre = false;
+		Vertice<String> v = grafo.listaDeVertices().elemento(pos);
+		camino.agregarFinal(v.dato());
+		
+		if (ciudades.incluye(v.dato())) {
+			return encontre;
+		}
+		
+		if (v.dato().equals(ciudadDestino)) {
+			return true;
+		}
+		
+		ListaGenerica<Arista<String>> ady = grafo.listaDeAdyacentes(v);
+		ady.comenzar();
+		while ((!encontre) & (!ady.fin())) {
+			int j = ady.proximo().verticeDestino().getPosicion();
+			if (!marcas[j]) {
+				encontre = this.dfs(j, ciudadDestino, camino, marcas, grafo, ciudades);
+				if (!encontre) {
+					camino.eliminarEn(camino.tamanio());
+				}
+			}
+		}
+		return encontre;
 	}
 }
