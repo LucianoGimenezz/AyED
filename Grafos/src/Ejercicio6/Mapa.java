@@ -183,4 +183,46 @@ public class Mapa {
 		return minKm;
 	}
 	
+	//Ejercicio5.4
+	
+	public ListaGenerica<String> caminoSinCargarCombustible (String ciudad1, String ciudad2, int tanqueAuto) {
+		ListaGenerica<String> camino = new ListaEnlazadaGenerica<String>();
+		boolean [] marcas = new boolean [this.mapaCiudades.listaDeVertices().tamanio()+1];
+		int posCiudad = this.buscarCiudad(ciudad1);
+		if (posCiudad == 0) {
+			return camino;
+		}
+		if (!this.dfs(posCiudad, ciudad2, marcas, this.mapaCiudades, camino, tanqueAuto)) camino.eliminarEn(1);
+		return camino;
+	}
+	
+	private boolean dfs(int pos, String ciudadDestino, boolean [] marcas, Grafo<String> grafo, ListaGenerica<String> camino, int tanqueAuto) {
+		Vertice<String> v = grafo.listaDeVertices().elemento(pos);
+		camino.agregarFinal(v.dato());
+		
+		if (v.dato().equals(ciudadDestino)) {
+			return true;
+		}
+
+		boolean encontre = false;
+		marcas[pos] = true;
+	
+		ListaGenerica<Arista<String>> ady = grafo.listaDeAdyacentes(v);
+		ady.comenzar();
+		while ((!encontre) & (!ady.fin())) {
+			Arista<String> a = ady.proximo();
+			int j = a.verticeDestino().getPosicion();
+			if (!marcas[j]) {
+				if ((tanqueAuto-a.peso()) > 0) {
+					encontre = this.dfs(j, ciudadDestino, marcas, grafo, camino, tanqueAuto-a.peso());
+					marcas[j] = false;     
+					if (!encontre) {
+						camino.eliminarEn(camino.tamanio());
+					}
+				}
+			}
+		}
+		return encontre;
+	}
+	
 }

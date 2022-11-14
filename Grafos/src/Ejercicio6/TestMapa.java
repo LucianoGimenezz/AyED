@@ -51,7 +51,7 @@ public class TestMapa {
 		caminos.agregarFinal("D");
 		caminos.agregarFinal("Z");
 		
-		ListaGenerica<String> camino = map.caminoMasCorto("D", "Z");
+		ListaGenerica<String> camino = map.caminoSinCargarCombustible("A", "P", 66);
 		camino.comenzar();
 		while (!camino.fin()) {
 			System.out.println(camino.proximo());
