@@ -46,12 +46,12 @@ public class TestMapa {
 		grafo.conectar(v5, v8, 10);
 		grafo.conectar(v8, v5, 10);
 		
-		Mapa map = new Mapa(grafo);
+		Mapa map = new Mapa(grafo, 45);
 		ListaGenerica<String> caminos = new ListaEnlazadaGenerica<String>();
 		caminos.agregarFinal("D");
 		caminos.agregarFinal("Z");
 		
-		ListaGenerica<String> camino = map.caminoSinCargarCombustible("A", "P", 66);
+		ListaGenerica<String> camino = map.caminoConMenorCargaDeCombustible("A","P", 39);
 		camino.comenzar();
 		while (!camino.fin()) {
 			System.out.println(camino.proximo());

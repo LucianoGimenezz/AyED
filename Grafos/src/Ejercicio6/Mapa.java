@@ -8,12 +8,17 @@ import tp02.ListaEnlazadaGenerica;
 import tp02.ListaGenerica;
 
 public class Mapa {
-	Grafo<String> mapaCiudades;
+	private Grafo<String> mapaCiudades;
+	private int totalTanque;
 	
 	public Mapa(Grafo<String> grafo) {
 		this.mapaCiudades = grafo;
 	}
 	
+	public Mapa(Grafo<String> grafo, int totalTanque) {
+		this.mapaCiudades = grafo;
+		this.totalTanque = totalTanque;
+	}
 	
 	// Ejercicio 5.1
 	public ListaGenerica<String> devolverCamino(String ciudad1, String ciudad2) {
@@ -225,4 +230,63 @@ public class Mapa {
 		return encontre;
 	}
 	
+	//Ejercicio 5.5
+	
+	public ListaGenerica<String> caminoConMenorCargaDeCombustible(String ciudad1, String ciudad2, int tanqueAuto) {
+		ListaGenerica<String> caminoMin = new ListaEnlazadaGenerica<String>();
+		ListaGenerica<String> caminoActual = new ListaEnlazadaGenerica<String>();
+		boolean [] marcas = new boolean [this.mapaCiudades.listaDeVertices().tamanio()+1];
+		int posCiudad = this.buscarCiudad(ciudad1);
+		int cargasMin = Integer.MAX_VALUE;
+		int cantCargas = 0;
+		if (posCiudad == 0) {
+			return caminoMin;
+		}
+		this.dfs(posCiudad, ciudad2, marcas, this.mapaCiudades, caminoMin, caminoActual, cantCargas, cargasMin, tanqueAuto);
+		return caminoMin;
+	}
+		
+	private int dfs(int pos, String ciudadDestino, boolean [] marcas, Grafo<String> grafo, ListaGenerica<String> caminoMin, ListaGenerica<String> caminoActual,
+		int cantCargas, int cargasMin, int tanqueAuto) {
+		
+		Vertice<String> v = grafo.listaDeVertices().elemento(pos);
+		caminoActual.agregarFinal(v.dato());
+		if (v.dato().equals(ciudadDestino)) {
+			System.out.println("Cantidad de veces cargadas:" + cantCargas);
+			if (cantCargas < cargasMin) {
+				cargasMin = cantCargas;
+				
+				caminoMin.comenzar();
+				while (!caminoMin.fin()) {
+					caminoMin.eliminar(caminoMin.proximo());
+				}
+				
+				caminoActual.comenzar();
+				while (!caminoActual.fin()) {
+					caminoMin.agregarFinal(caminoActual.proximo());
+				}
+			}
+			return cargasMin;
+		}
+		
+		marcas[pos] = true;
+		ListaGenerica<Arista<String>> ady = grafo.listaDeAdyacentes(v);
+		ady.comenzar();
+		while (!ady.fin()) {
+			Arista<String> a = ady.proximo();
+			int j = a.verticeDestino().getPosicion();
+			if (!marcas[j]) {
+				
+				if ((tanqueAuto - a.peso()) <= 0) {
+					tanqueAuto = this.totalTanque;
+					cantCargas+=1;
+				}
+				
+				cargasMin = this.dfs(j, ciudadDestino, marcas, grafo, caminoMin, caminoActual,cantCargas, cargasMin, tanqueAuto-a.peso());
+				marcas[j] = false;
+				caminoActual.eliminarEn(caminoActual.tamanio());
+			}
+		}
+		return cargasMin;
+	}
 }
