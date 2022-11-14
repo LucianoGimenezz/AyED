@@ -16,6 +16,7 @@ public class TestMapa {
 		Vertice<String> v5 = new VerticeImplListAdy<String>("H");
 		Vertice<String> v6 = new VerticeImplListAdy<String>("Z");
 		Vertice<String> v7 = new VerticeImplListAdy<String>("L");
+		Vertice<String> v8 = new VerticeImplListAdy<String>("P");
 		
 		Grafo<String> grafo = new GrafoImplListAdy<String>();
 		grafo.agregarVertice(v1);
@@ -25,29 +26,32 @@ public class TestMapa {
 		grafo.agregarVertice(v5);
 		grafo.agregarVertice(v6);
 		grafo.agregarVertice(v7);
+		grafo.agregarVertice(v7);
+		grafo.agregarVertice(v8);
 		
-		grafo.conectar(v1, v2);
-		grafo.conectar(v2, v1);
-		grafo.conectar(v2, v3);
-		grafo.conectar(v3, v2);
-		grafo.conectar(v3, v4);
-		grafo.conectar(v4, v3);
-		grafo.conectar(v1, v5);
-		grafo.conectar(v5, v1);
-		grafo.conectar(v3, v6);
-		grafo.conectar(v6, v3);
-		grafo.conectar(v4, v7);
-		grafo.conectar(v7, v4);
-		grafo.conectar(v5, v7);
-		grafo.conectar(v7, v5);
-		grafo.conectar(v6, v7);
-		grafo.conectar(v7, v6);
+		grafo.conectar(v1, v2, 20);
+		grafo.conectar(v2, v1, 20);
+		grafo.conectar(v2, v3, 12);
+		grafo.conectar(v3, v2, 12);
+		grafo.conectar(v3, v4, 7);
+		grafo.conectar(v4, v3, 7);
+		grafo.conectar(v3, v6, 11);
+		grafo.conectar(v6, v3, 11);
+		grafo.conectar(v4, v7, 7);
+		grafo.conectar(v7, v4, 7);
+		grafo.conectar(v5, v7, 12);
+		grafo.conectar(v7, v5, 12);
+		grafo.conectar(v6, v7, 1);
+		grafo.conectar(v7, v6, 1);
+		grafo.conectar(v5, v8, 10);
+		grafo.conectar(v8, v5, 10);
 		
 		Mapa map = new Mapa(grafo);
 		ListaGenerica<String> caminos = new ListaEnlazadaGenerica<String>();
-		caminos.agregarFinal("A");
-		caminos.agregarFinal("C");
-		ListaGenerica<String> camino = map.devolverCaminoExceptuando("L", "B", caminos);
+		caminos.agregarFinal("D");
+		caminos.agregarFinal("Z");
+		
+		ListaGenerica<String> camino = map.caminoMasCorto("D", "Z");
 		camino.comenzar();
 		while (!camino.fin()) {
 			System.out.println(camino.proximo());

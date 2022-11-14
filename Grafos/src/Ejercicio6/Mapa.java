@@ -140,13 +140,13 @@ public class Mapa {
 		if (posCiudad == 0) {
 			return caminoMin;
 		}
-		this.dfs(posCiudad, ciudad2, marcas, this.mapaCiudades, caminoMin, caminoActual, kmActual, minKm);
+		minKm = this.dfs(posCiudad, ciudad2, marcas, this.mapaCiudades, caminoMin, caminoActual, kmActual, minKm);
+		System.out.println("El valor del camino mas corto fue:" +  minKm);
 		return caminoMin;
 	}
 	
 	private int dfs(int pos, String ciudadDestino, boolean [] marcas, Grafo<String> grafo, ListaGenerica<String> caminoMin, ListaGenerica<String> caminoActual, int totalKm, int minKm) {
 		marcas[pos] = true;
-		boolean encontre = false;
 		Vertice<String> v = grafo.listaDeVertices().elemento(pos);
 		caminoActual.agregarFinal(v.dato());	
 		
@@ -157,8 +157,7 @@ public class Mapa {
 				caminoMin.comenzar();
 				
 				while (!caminoMin.fin()) {
-					caminoMin.proximo();
-					caminoMin.eliminarEn(caminoMin.tamanio());
+					caminoMin.eliminar(caminoMin.proximo());
 				}
 				
 				caminoActual.comenzar();
