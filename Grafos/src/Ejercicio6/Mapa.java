@@ -278,8 +278,8 @@ public class Mapa {
 			if (!marcas[j]) {
 				
 				if ((tanqueAuto - a.peso()) <= 0) {
-					tanqueAuto = this.totalTanque;
-					cantCargas+=1;
+					int aux = this.totalTanque;
+					cargasMin = this.dfs(j, ciudadDestino, marcas, grafo, caminoMin, caminoActual,cantCargas+1, cargasMin, aux-a.peso());
 				}
 				
 				cargasMin = this.dfs(j, ciudadDestino, marcas, grafo, caminoMin, caminoActual,cantCargas, cargasMin, tanqueAuto-a.peso());
