@@ -19,13 +19,13 @@ public class VisitaOslo {
 		if (posOrigen == 0) {
 			return camino;
 		}
-		//this.marcarLugaresRestringidos(lugares.listaDeVertices(), lugaresRestringidos, marcas);
-		this.dfs(posOrigen, lugares, destino, maxTiempo, camino, marcas, tiempoAct,lugaresRestringidos);
+		this.marcarLugaresRestringidos(lugares.listaDeVertices(), lugaresRestringidos, marcas);
+		this.dfs(posOrigen, lugares, destino, maxTiempo, camino, marcas, tiempoAct);
 		return camino;
 	}
 	
 	private boolean dfs(int pos, Grafo<String> lugares, String destino, int maxTiempo, 
-			ListaGenerica<String> camino, boolean [] marcas, int tiempoAct, ListaGenerica<String> lugaresRestringidos) {
+			ListaGenerica<String> camino, boolean [] marcas, int tiempoAct) {
 		marcas[pos] = true;
 		boolean encontre = false;
 		Vertice<String> v = lugares.listaDeVertices().elemento(pos);
@@ -40,8 +40,8 @@ public class VisitaOslo {
 		while (!encontre && !ady.fin()) {
 			Arista<String> a = ady.proximo();
 			int j = a.verticeDestino().getPosicion();
-			if (!lugaresRestringidos.incluye(v.dato()) && !marcas[j] && (tiempoAct+a.peso() < maxTiempo)) {
-				encontre = this.dfs(j, lugares, destino, maxTiempo, camino, marcas, tiempoAct+a.peso(),lugaresRestringidos);
+			if (!marcas[j] && (tiempoAct+a.peso() < maxTiempo)) {
+				encontre = this.dfs(j, lugares, destino, maxTiempo, camino, marcas, tiempoAct+a.peso());
 				if (!encontre) {
 					camino.eliminarEn(camino.tamanio());
 					marcas[j] = false;

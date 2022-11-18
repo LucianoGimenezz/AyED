@@ -86,10 +86,10 @@ public class TestVisitaOslo {
 		VisitaOslo visita = new VisitaOslo();
 		
 		ListaGenerica<String> lugaresRestringidos = new ListaEnlazadaGenerica<String>();
-		lugaresRestringidos.agregarFinal("Galeria Nacional");
+		lugaresRestringidos.agregarFinal("Akker Brigge");
+		lugaresRestringidos.agregarFinal("Palacio Real");
 		
-		
-		ListaGenerica<String> camino = visita.paseoEnBici(lugares, "Holmenkollen", 65, lugaresRestringidos);
+		ListaGenerica<String> camino = visita.paseoEnBici(lugares, "Museo Vikingo", 120, lugaresRestringidos);
 		camino.comenzar();
 		while (!camino.fin()) {
 			System.out.println(camino.proximo());
